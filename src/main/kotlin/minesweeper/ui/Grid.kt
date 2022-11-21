@@ -22,6 +22,9 @@ object Grid {
     fun generateUI() {
         for (tile in Board.tiles) {
             panel.add(JButton("").apply {
+                val grassColor = if (tile.x % 2 == tile.y % 2) Color(170, 215, 81) else Color(162, 209, 73)
+                background = grassColor
+
                 preferredSize = Dimension(50, 50)
 
                 addMouseListener(object : MouseListener {
@@ -37,15 +40,19 @@ object Grid {
                         // Logic
                         if (tile.isBomb) frame.dispose()
                         else if (tile.getNumber() > 0) {
+                            background = if (tile.x % 2 == tile.y % 2) Color(229, 194, 159) else Color(215, 184, 153)
                             foreground = Utils.numberToColor(tile.getNumber())
+
                             text = tile.getNumber().toString()
                         }
 
                         // Explode blank tiles
                         else Board.getBlanks(tile).forEach {
-                            if (it.getNumber() == 0) tileToButton[it]?.hide()
-                            else {
-                                tileToButton[it]?.apply {
+                            // Break
+                            tileToButton[it]?.apply {
+                                background = if (it.x % 2 == it.y % 2) Color(229, 194, 159) else Color(215, 184, 153)
+
+                                if (it.getNumber() > 0) {
                                     foreground = Utils.numberToColor(it.getNumber())
                                     text = it.getNumber().toString()
                                 }
