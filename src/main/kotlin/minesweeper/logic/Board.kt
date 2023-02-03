@@ -1,14 +1,22 @@
 package minesweeper.logic
 
+import minesweeper.ui.Grid
+
 object Board {
     val tiles = generateTiles()
+    var generated = false
 
-    fun generateNumbers() {
-        tiles.shuffled().take(10).forEach { it.isBomb = true }
+    fun generate(startTile: Tile) {
+        tiles.filter { !startTile.surrounding().contains(it) }
+            .shuffled()
+            .take(10)
+            .forEach { it.isBomb = true }
 
         for (tile in tiles.iterator()) {
             if (tile.isBomb) tile.surrounding().forEach { it.increment() }
         }
+
+        this.generated = true
     }
 
     fun getBlanks(tile: Tile, blanks: MutableList<Tile> = mutableListOf()): MutableList<Tile> {
