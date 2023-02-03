@@ -20,6 +20,7 @@ object Grid {
                 override fun mouseReleased(e: MouseEvent?) {
                     // Generate bombs on first click
                     if (!Board.generated) Board.generate(tile)
+                    if (tile.isRevealed()) return
 
                     // Flag
                     if (SwingUtilities.isRightMouseButton(e)) return tile.updateFlag()
