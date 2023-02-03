@@ -8,10 +8,10 @@ import java.awt.Dimension
 import java.awt.GridLayout
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import javax.swing.JButton
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import java.util.*
+import java.util.Timer
+import kotlin.concurrent.schedule
+import javax.swing.*
 
 object Grid {
     private val frame = JFrame().apply { defaultCloseOperation = JFrame.EXIT_ON_CLOSE }
@@ -29,6 +29,9 @@ object Grid {
 
                 addMouseListener(object : MouseListener {
                     override fun mouseReleased(e: MouseEvent?) {
+                        // Generate bombs on first click
+                        if (!Board.generated) Board.generate(tile)
+
                         // Flag
                         if (SwingUtilities.isRightMouseButton(e)) {
                             text = if (text.isEmpty()) "X" else ""
@@ -57,6 +60,18 @@ object Grid {
                                     text = it.getNumber().toString()
                                 }
                             }
+                        }
+
+                        // Check if entire grid is revealed
+                        if (Board.tiles
+                                .filter { !it.isBomb }
+                                .map { tileToButton[it] }
+                                .all {
+                                    it?.background.let { color -> color == Color(229, 194, 159) || color == Color(215, 184, 153) }
+                                }
+                        ) {
+                            println("You won!")
+                            Timer().schedule(2000) { frame.dispose() }
                         }
                     }
 
