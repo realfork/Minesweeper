@@ -1,7 +1,5 @@
 package minesweeper.logic
 
-import minesweeper.ui.Grid
-
 object Board {
     val tiles = generateTiles()
     var generated = false
