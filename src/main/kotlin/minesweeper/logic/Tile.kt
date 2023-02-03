@@ -55,6 +55,8 @@ class Tile(private val x: Int, private val y: Int) {
             button.foreground = Utils.numberToColor(number)
             button.text = number.toString()
         }
+
+        isRevealed = true
     }
 
     init {
