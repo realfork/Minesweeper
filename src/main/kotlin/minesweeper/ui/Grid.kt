@@ -37,7 +37,10 @@ object Grid {
                             .all { it.isRevealed() }
                     ) {
                         println("You won!")
-                        Timer().schedule(2000) { frame.dispose() }
+                        Timer().schedule(2000) {
+                            frame.dispose()
+                            this.cancel()
+                        }
                     }
                 }
 
