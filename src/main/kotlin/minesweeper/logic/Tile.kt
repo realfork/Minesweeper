@@ -2,6 +2,8 @@ package minesweeper.logic
 
 import java.awt.Color
 import java.awt.Dimension
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import javax.swing.JButton
 
 class Tile(private val x: Int, private val y: Int) {
@@ -60,7 +62,22 @@ class Tile(private val x: Int, private val y: Int) {
     }
 
     init {
+        button.isBorderPainted = false
         button.background = grassColor
         button.preferredSize = Dimension(50, 50)
+
+        // Select animation
+        button.addMouseListener(object : MouseAdapter() {
+            override fun mouseEntered(evt: MouseEvent) {
+                // TODO Make hover animation better
+                if (!Board.generated || number > 0) button.background.let {
+                     button.background = Color(it.red + 22, it.green + 10, it.blue + 45)
+                }
+            }
+
+            override fun mouseExited(evt: MouseEvent) {
+                button.background = if (isRevealed) tileColor else grassColor
+            }
+        })
     }
 }
