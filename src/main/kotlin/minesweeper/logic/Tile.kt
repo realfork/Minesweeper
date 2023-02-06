@@ -1,7 +1,8 @@
 package minesweeper.logic
 
+import minesweeper.logic.utils.Utils
 import java.awt.Color
-import java.awt.Dimension
+import java.awt.Insets
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.JButton
@@ -36,8 +37,8 @@ class Tile(private val x: Int, private val y: Int) {
     val button = JButton("")
 
     // Colors
-    private var grassColor = if (x % 2 == y % 2) Color(170, 215, 81) else Color(162, 209, 73)
-    private var tileColor = if (x % 2 == y % 2) Color(229, 194, 159) else Color(215, 184, 153)
+    private var grassColor = if ((x + y) % 2 == 0) Color(170, 215, 81) else Color(162, 209, 73)
+    private var tileColor = if ((x + y) % 2 == 0) Color(229, 194, 159) else Color(215, 184, 153)
 
     // Flag logic
     private var isFlagged = false
@@ -64,13 +65,13 @@ class Tile(private val x: Int, private val y: Int) {
     init {
         button.isBorderPainted = false
         button.background = grassColor
-        button.preferredSize = Dimension(50, 50)
+        button.preferredSize = Utils.getTileDimension()
+        button.margin = Insets(0, 0, 0, 0)
 
         // Select animation
         button.addMouseListener(object : MouseAdapter() {
             override fun mouseEntered(evt: MouseEvent) {
-                // TODO Make hover animation better
-                if (!Board.generated || number > 0) button.background.let {
+                if (!Board.generated || (isRevealed && number > 0)) button.background.let {
                      button.background = Color(it.red + 22, it.green + 10, it.blue + 45)
                 }
             }

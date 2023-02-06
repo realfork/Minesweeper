@@ -1,6 +1,7 @@
 package minesweeper.ui
 
 import minesweeper.logic.Board
+import minesweeper.logic.utils.Utils
 import java.awt.GridLayout
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
@@ -12,7 +13,11 @@ import kotlin.concurrent.schedule
 
 object Grid {
     private val frame = JFrame().apply { defaultCloseOperation = JFrame.EXIT_ON_CLOSE }
-    private val panel = JPanel().apply { layout = GridLayout(8, 10) }
+    private val panel = JPanel().apply {
+        Utils.getBoardSize().let {
+            layout = GridLayout(it.y, it.x)
+        }
+    }
 
     fun generateUI() {
         for (tile in Board.tiles) {

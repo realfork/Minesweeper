@@ -1,13 +1,15 @@
 package minesweeper.logic
 
+import minesweeper.logic.utils.Utils
+
 object Board {
-    val tiles = generateTiles()
+    val tiles = mutableListOf<Tile>()
     var generated = false
 
     fun generate(startTile: Tile) {
         tiles.filter { !startTile.surrounding().contains(it) }
             .shuffled()
-            .take(10)
+            .take(Utils.getNumberOfBombs())
             .forEach { it.isBomb = true }
 
         for (tile in tiles.iterator()) {
@@ -29,14 +31,13 @@ object Board {
         return blanks
     }
 
-    private fun generateTiles(): List<Tile> {
-        val tiles = mutableListOf<Tile>()
-        for (y in 1..8) {
-            for (x in 1..10) {
+    init {
+        val size = Utils.getBoardSize()
+
+        for (y in 1..size.y) {
+            for (x in 1..size.x) {
                 tiles.add(Tile(x, y))
             }
         }
-
-        return tiles
     }
 }
