@@ -2,13 +2,14 @@ package minesweeper.ui
 
 import minesweeper.logic.Board
 import minesweeper.logic.utils.Utils
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.FlowLayout
 import java.awt.GridLayout
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import java.util.*
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import java.util.Timer
+import javax.swing.*
 import kotlin.concurrent.schedule
 
 object Grid {
@@ -17,6 +18,18 @@ object Grid {
         Utils.getBoardSize().let {
             layout = GridLayout(it.y, it.x)
         }
+    }
+
+    // Timer and flags
+    val timer = JLabel("000", ImageIcon(javaClass.getResource("/clock.png")), JLabel.CENTER)
+    val flags = JLabel(Utils.getNumberOfBombs().toString(), ImageIcon(javaClass.getResource("/flag.png")), JLabel.CENTER)
+
+    private val statusBar = JPanel().apply {
+        layout = FlowLayout(FlowLayout.CENTER)
+
+        // Add status info
+        add(flags)
+        add(timer)
     }
 
     fun generateUI() {
@@ -59,8 +72,10 @@ object Grid {
         }
 
         frame.apply {
-            contentPane.add(panel)
+            add(statusBar, BorderLayout.NORTH)
+            add(panel, BorderLayout.SOUTH)
             pack()
+
             setLocationRelativeTo(null)
             isVisible = true
         }
