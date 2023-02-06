@@ -1,6 +1,7 @@
 package minesweeper.logic
 
 import minesweeper.logic.utils.Utils
+import minesweeper.ui.Grid
 import java.awt.Color
 import java.awt.Insets
 import java.awt.event.MouseAdapter
@@ -47,6 +48,11 @@ class Tile(private val x: Int, private val y: Int) {
         isFlagged = !isFlagged
         button.text = if (isFlagged) "X" else ""
         button.foreground = if (!isFlagged) Utils.numberToColor(number) else Color.RED
+
+        // Modify flag number
+        Grid.flags.apply {
+            text = (text.toInt() + (if (isFlagged) -1 else 1)).toString()
+        }
     }
 
     // Reveal logic
@@ -71,7 +77,7 @@ class Tile(private val x: Int, private val y: Int) {
         // Select animation
         button.addMouseListener(object : MouseAdapter() {
             override fun mouseEntered(evt: MouseEvent) {
-                if (!Board.generated || (isRevealed && number > 0)) button.background.let {
+                if (!isRevealed) button.background.let {
                      button.background = Color(it.red + 22, it.green + 10, it.blue + 45)
                 }
             }

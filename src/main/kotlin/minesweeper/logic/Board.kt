@@ -1,10 +1,15 @@
 package minesweeper.logic
 
 import minesweeper.logic.utils.Utils
+import minesweeper.ui.Grid
+import java.util.Timer
+import kotlin.concurrent.scheduleAtFixedRate
 
 object Board {
     val tiles = mutableListOf<Tile>()
+
     var generated = false
+    private var timer = Timer()
 
     fun generate(startTile: Tile) {
         tiles.filter { !startTile.surrounding().contains(it) }
@@ -16,7 +21,14 @@ object Board {
             if (tile.isBomb) tile.surrounding().forEach { it.increment() }
         }
 
+        // Start game
         this.generated = true
+        timer.scheduleAtFixedRate(0, 1000) {
+            Grid.timer.apply {
+                // TODO Pad timer text with 0s
+                text = (text.toInt() + 1).toString()
+            }
+        }
     }
 
     fun getBlanks(tile: Tile, blanks: MutableList<Tile> = mutableListOf()): MutableList<Tile> {
