@@ -3,12 +3,10 @@ package minesweeper.logic
 import minesweeper.logic.settings.Constants
 import minesweeper.logic.utils.Utils
 import minesweeper.ui.Grid
-import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
 object Board {
     val tiles = mutableListOf<Tile>()
-
     var generated = false
 
     fun generate(startTile: Tile) {
