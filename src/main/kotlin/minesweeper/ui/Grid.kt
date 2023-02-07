@@ -3,12 +3,16 @@ package minesweeper.ui
 import minesweeper.logic.Board
 import minesweeper.logic.settings.Constants
 import minesweeper.logic.utils.Utils
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.FlowLayout
+import java.awt.GridLayout
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import java.util.Timer
-import javax.swing.*
-import kotlin.concurrent.schedule
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.SwingUtilities
 import kotlin.system.exitProcess
 
 object Grid {

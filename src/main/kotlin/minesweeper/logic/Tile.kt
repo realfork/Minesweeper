@@ -7,7 +7,6 @@ import java.awt.Color
 import java.awt.Insets
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import javax.swing.ImageIcon
 import javax.swing.JButton
 
 class Tile(private val x: Int, private val y: Int) {
