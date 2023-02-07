@@ -1,13 +1,13 @@
 package minesweeper.logic.utils
 
-import minesweeper.Main
+import minesweeper.logic.settings.Constants
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Point
 
 object Utils {
     fun getBoardSize(): Point {
-        return when (Main.difficulty) {
+        return when (Constants.difficulty) {
             Difficulty.EASY -> Point(10, 8)
             Difficulty.MEDIUM -> Point(18, 14)
             Difficulty.HARD -> Point(24, 20)
@@ -15,7 +15,7 @@ object Utils {
     }
 
     fun getTileDimension(): Dimension {
-        return when (Main.difficulty) {
+        return when (Constants.difficulty) {
             Difficulty.EASY -> Dimension(50, 50)
             Difficulty.MEDIUM -> Dimension(40, 40) // Adjust
             Difficulty.HARD -> Dimension(30, 30) // Adjust
@@ -23,7 +23,7 @@ object Utils {
     }
 
     fun getNumberOfBombs(): Int {
-        return when (Main.difficulty) {
+        return when (Constants.difficulty) {
             Difficulty.EASY -> 10
             Difficulty.MEDIUM -> 40
             Difficulty.HARD -> 99

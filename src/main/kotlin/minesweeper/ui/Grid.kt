@@ -1,16 +1,15 @@
 package minesweeper.ui
 
 import minesweeper.logic.Board
+import minesweeper.logic.settings.Constants
 import minesweeper.logic.utils.Utils
-import java.awt.BorderLayout
-import java.awt.Dimension
-import java.awt.FlowLayout
-import java.awt.GridLayout
+import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import java.util.Timer
 import javax.swing.*
 import kotlin.concurrent.schedule
+import kotlin.system.exitProcess
 
 object Grid {
     private val frame = JFrame().apply { defaultCloseOperation = JFrame.EXIT_ON_CLOSE }
@@ -21,10 +20,11 @@ object Grid {
     }
 
     // Timer and flags
-    val timer = JLabel("000", ImageIcon(javaClass.getResource("/clock.png")), JLabel.CENTER)
-    val flags = JLabel(Utils.getNumberOfBombs().toString(), ImageIcon(javaClass.getResource("/flag.png")), JLabel.CENTER)
+    val timer = JLabel("000", Constants.timeIcon, JLabel.CENTER).apply { foreground = Color.WHITE }
+    val flags = JLabel(Utils.getNumberOfBombs().toString(), Constants.flagIcon, JLabel.CENTER).apply { foreground = Color.WHITE }
 
     private val statusBar = JPanel().apply {
+        background = Color(74, 117, 44)
         layout = FlowLayout(FlowLayout.CENTER)
 
         // Add status info
@@ -54,11 +54,8 @@ object Grid {
                             .filter { !it.isBomb }
                             .all { it.isRevealed() }
                     ) {
-                        println("You won!")
-                        Timer().schedule(2000) {
-                            frame.dispose()
-                            this.cancel()
-                        }
+                        println("You won! Finished in ${timer.text}s")
+                        exitProcess(0)
                     }
                 }
 

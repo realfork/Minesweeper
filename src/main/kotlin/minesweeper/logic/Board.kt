@@ -1,5 +1,6 @@
 package minesweeper.logic
 
+import minesweeper.logic.settings.Constants
 import minesweeper.logic.utils.Utils
 import minesweeper.ui.Grid
 import java.util.Timer
@@ -9,7 +10,6 @@ object Board {
     val tiles = mutableListOf<Tile>()
 
     var generated = false
-    private var timer = Timer()
 
     fun generate(startTile: Tile) {
         tiles.filter { !startTile.surrounding().contains(it) }
@@ -23,10 +23,9 @@ object Board {
 
         // Start game
         this.generated = true
-        timer.scheduleAtFixedRate(0, 1000) {
+        Constants.timer.scheduleAtFixedRate(0, 1000) {
             Grid.timer.apply {
-                // TODO Pad timer text with 0s
-                text = (text.toInt() + 1).toString()
+                text = text.toInt().inc().toString().padStart(3, '0')
             }
         }
     }

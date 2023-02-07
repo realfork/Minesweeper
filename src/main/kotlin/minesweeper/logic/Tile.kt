@@ -1,11 +1,13 @@
 package minesweeper.logic
 
+import minesweeper.logic.settings.Constants
 import minesweeper.logic.utils.Utils
 import minesweeper.ui.Grid
 import java.awt.Color
 import java.awt.Insets
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import javax.swing.ImageIcon
 import javax.swing.JButton
 
 class Tile(private val x: Int, private val y: Int) {
@@ -35,7 +37,7 @@ class Tile(private val x: Int, private val y: Int) {
     }
 
     // UI
-    val button = JButton("")
+    val button = JButton()
 
     // Colors
     private var grassColor = if ((x + y) % 2 == 0) Color(170, 215, 81) else Color(162, 209, 73)
@@ -46,8 +48,7 @@ class Tile(private val x: Int, private val y: Int) {
     fun isFlagged() = isFlagged
     fun updateFlag() {
         isFlagged = !isFlagged
-        button.text = if (isFlagged) "X" else ""
-        button.foreground = if (!isFlagged) Utils.numberToColor(number) else Color.RED
+        button.icon = if (isFlagged) Constants.flagIcon else null
 
         // Modify flag number
         Grid.flags.apply {
