@@ -59,6 +59,8 @@ object Grid {
                             .all { it.isRevealed() }
                     ) {
                         println("You won! Finished in ${timer.text}s")
+
+                        Constants.timer.cancel()
                         exitProcess(0)
                     }
                 }
